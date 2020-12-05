@@ -26,7 +26,8 @@ class Scanner:
         self.REs.append(Word(FLOAT,re.compile(RE_FLOAT)))
         self.REs.append(Word(STRING,re.compile(RE_STRING)))
         self.REs.append(Word(CHAR,re.compile(RE_CHAR)))
-        self.REs.append(Word(SPACE,re.compile(RE_SPACE)))    
+        self.REs.append(Word(SPACE,re.compile(RE_SPACE)))
+        self.REs.append(Word(ERR_ID,re.compile(RE_ERR_ID)))    
     
     def next(self):
         res = Token("ERROR","END_OF_FILE",self.index)
@@ -34,7 +35,9 @@ class Scanner:
             res = self.scan()
             if res.type != SPACE:
                 if res.type == 'KEY_WORDS':
-                    res =Token(res.value,res.value,res.index)
+                    res = Token(res.value,res.value,res.index)
+                elif res.type == ERR_ID:
+                    return Token("ERROR","ID_INVALID",res.index)
                 break
         return res
         
@@ -47,10 +50,11 @@ class Scanner:
                 if temp.span()[1] > maxIndex:
                     maxIndex = temp.span()[1]
                     res = Token(this.type,temp.group(),maxIndex)
-        self.index = maxIndex
+        if self.index != maxIndex:
+            self.index = maxIndex
+        else:
+            return Token('ERROR','UNABLE_TO_MATCH',self.index)
         return res
-
-
 
 
 S = Scanner('demo.c')

@@ -31,3 +31,6 @@ RE_SPACE = '\s+'
 
 RE_REMARK0 = '//.*?\n' #解决//格式的注释
 RE_REMARK1 = '/\*[^*]*\*+([^/*][^*]*\*+)*/' #解决/**/格式的多行注释
+
+ERR_ID = "ERROR_ID"
+RE_ERR_ID = '[\d]+[a-zA-Z_][a-zA-Z_0-9]*'
