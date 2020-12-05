@@ -23,7 +23,7 @@ class Scanner:
         self.REs.append(Word('KEY_WORDS',re.compile('|'.join(keyList))))
         self.REs.append(Word(IDENTIFIER,re.compile(RE_ID)))
         self.REs.append(Word(INTEGER,re.compile(RE_INT)))
-        self.REs.append(Word(REAL,re.compile(RE_FLOAT)))
+        self.REs.append(Word(FLOAT,re.compile(RE_FLOAT)))
         self.REs.append(Word(STRING,re.compile(RE_STRING)))
         self.REs.append(Word(CHAR,re.compile(RE_CHAR)))
         self.REs.append(Word(SPACE,re.compile(RE_SPACE)))    

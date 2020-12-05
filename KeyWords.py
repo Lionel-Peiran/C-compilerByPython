@@ -17,7 +17,7 @@ RE_ID = '[a-zA-Z_][a-zA-Z_0-9]*'
 INTEGER = 'int_const'
 RE_INT = '\d+'
 
-REAL = 'float_const'
+FLOAT = 'float_const'
 RE_FLOAT = '-?\d+\.\d+?'
 
 STRING = 'string'
