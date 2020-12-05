@@ -1,8 +1,7 @@
-from Grammar import keyWords
 import re
+from collections import namedtuple
 
-a = '|'.join(keyWords)
-with open('demo.c') as f:
-    data = f.read()
-    
-    print(data)    
+SPACE = re.compile('ccs')
+string = 'cc'
+
+print(SPACE.match(string))

@@ -11,9 +11,23 @@ double_separetor = ['!=', '--', '&=', '\*=', '^=', '\|\|', '\+=', '>>', '->',
 
 triple_separetor = ['<<=', '>>=']
 
-IDENTIFIER = {type:'id',RE:r''}
-INTEGER = 'int_const'
-BOOL = 'int_const'
-REAL = 'float_const'
-STRING = 'string'
+IDENTIFIER = 'id'
+RE_ID = '[a-zA-Z_][a-zA-Z_0-9]*'
 
+INTEGER = 'int_const'
+RE_INT = '\d+'
+
+REAL = 'float_const'
+RE_FLOAT = '-?\d+\.\d+?'
+
+STRING = 'string'
+RE_STRING = '\".+?\"'
+
+CHAR = 'char_const'
+RE_CHAR = '\'.{1}\''
+
+SPACE = 'NULL'
+RE_SPACE = '\s+'
+
+RE_REMARK0 = '//.*?\n' #解决//格式的注释
+RE_REMARK1 = '/\*[^*]*\*+([^/*][^*]*\*+)*/' #解决/**/格式的多行注释
