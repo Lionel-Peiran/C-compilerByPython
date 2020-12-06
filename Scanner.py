@@ -30,16 +30,16 @@ class Scanner:
         self.REs.append(Word(ERR_ID,re.compile(RE_ERR_ID)))    
     
     def next(self):
-        res = Token("ERROR","END_OF_FILE",self.index)
         while self.index < self.sizeofFile:
             res = self.scan()
             if res.type != SPACE:
                 if res.type == 'KEY_WORDS':
                     res = Token(res.value,res.value,res.index)
                 elif res.type == ERR_ID:
-                    return Token("ERROR","ID_INVALID",res.index)
-                break
-        return res
+                    yield Token("ERROR","ID_INVALID",res.index)
+                yield res
+        yield Token("$","$",self.index)
+        
         
     def scan(self):
         maxIndex = self.index
@@ -57,9 +57,3 @@ class Scanner:
         return res
 
 
-S = Scanner('demo.c')
-while True:
-    temp = S.next()
-    print(temp)
-    if temp.type == "ERROR":
-        break

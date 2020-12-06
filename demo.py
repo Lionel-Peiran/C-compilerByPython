@@ -1,7 +1,7 @@
 import re
 from collections import namedtuple
+from Grammar import PP
 
-string = '1223acsdfa'
-RE = '^[\d]+[a-zA-Z_][a-zA-Z_0-9]*'
-RE = re.compile(RE)
-print(RE.match(string))
+Token = namedtuple('Token','type value index')
+a = Token(2,2,2)
+print(a[0])
