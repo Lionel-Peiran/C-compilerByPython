@@ -228,3 +228,13 @@ PP = [
     ('const', 'float_const'),
     ('const', 'enumeration_const')
 ]
+
+
+
+Book = [
+    ('Goal', 'List'), 
+    ('List', 'List', 'Pair'),
+    ('List', 'Pair'),
+    ('Pair', "'('", 'Pair', "')'"),
+    ('Pair', "'('", "')'")
+]
