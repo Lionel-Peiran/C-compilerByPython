@@ -175,12 +175,6 @@ def First_S(ps, first, terminal, nullable, left=None, follow=None):
     return res
 
 
-def Nullable_S(ps, nullable):
-    """
-    判断串是否可为空
-    """
-    return all(map(lambda i: i in nullable, ps))
-
 
 def Follow(productions, fitst, terminal, nullable):
     """
@@ -242,7 +236,7 @@ def LR1_parse_table(Grammar_Table, FIRST, TERMINAL, Nullable, start_symbol='<程
     while StateQueue:
         curState = StateQueue.pop()
 
-        print(len(StateQueue))
+        #print(len(StateQueue))
             
         for item in states[curState]:
             lhs, *rhs = Extended_Table[item.pid]
@@ -271,9 +265,21 @@ def LR1_parse_table(Grammar_Table, FIRST, TERMINAL, Nullable, start_symbol='<程
                     Goto_Table[curState][rhs[item.dot]] = nextState
 
     return Extended_Table, Action_Table, Goto_Table
-
+def Load_Table():
+    fp = open('parse_table.dat', 'rb') 
+    #Extended_Table, Action_Table, Goto_Table, = pickle.load(fp)
+    Extended_Table, Action_Table, Goto_Table = pickle.load(fp)
+    return Extended_Table, Action_Table, Goto_Table
 if __name__ == '__main__':
-    S = PP
+    
+    Extended_Table, Action_Table, Goto_Table = Load_Table()
+    for i in range(len(Action_Table)):
+        print(i, " : ", Action_Table[i])
+    
+    print(Goto_Table)
+
+    '''
+    S = Book
     
     TERMINAL = Terminal_Set(S)
     #print(TERMINAL)
@@ -286,55 +292,19 @@ if __name__ == '__main__':
     #print(FOLLOW)
 
     print("Begin Table Trans")
-    Extended_Table, Action_Table, Goto_Table = LR1_parse_table(S, FIRST, TERMINAL, Nullable, start_symbol='translation_unit')
+    Extended_Table, Action_Table, Goto_Table = LR1_parse_table(S, FIRST, TERMINAL, Nullable, start_symbol='Goal')
 
     pickle.dump((Extended_Table, dict(Action_Table),  dict(Goto_Table)), open('parse_table.dat', 'wb'))
 
     for i in range(len(Action_Table)):
         print(i, " : ", Action_Table[i])
     
-    for i in range(len(Goto_Table)):
-        print(i, " : ", Goto_Table[i])
-    
+    print(Goto_Table)
+    #for i in range(len(Goto_Table)):
+    #    print(i, " : ", Goto_Table[i])
+
+    Extended_Table, Action_Table, Goto_Table = Load_Table()
+    print(Action_Table)
+    print(Goto_Table)
 
     '''
-    TERMINAL = Terminal_Set(PP)
-    print(TERMINAL)
-    Nullable = NullableSet(PP)
-    print(Nullable)
-    FIRST = First(PP, TERMINAL, Nullable)
-    #print(FIRST)
-    #print(First_Set(PP, TERMINAL, Nullable))
-    
-    res = First_Set(PP, TERMINAL, Nullable)
-    for (k, v) in FIRST.items():
-        if res[k] != v:
-            print(res[k], "   ", v)
-
-    FOLLOW = Follow(PP,FIRST, TERMINAL, Nullable)
-    res = Follow_Set(PP,FIRST, TERMINAL, Nullable)
-    for (k, v) in FOLLOW.items():
-        if res[k] != v:
-            print(res[k], "   ", v)
-    '''
-    #print(FOLLOW)
-    #productions, parse_tab = LR1_parse_table(
-    #    Book, FIRST, TERMINAL, Nullable, start_symbol='Goal')
-
-    #for i in range(len(parse_tab)):
-    #    print(i, " : ", parse_tab[i])
-'''
-    NullS = Nullable_Set(Book)
-    TerminalS = Terminal_Set(Book)
-    FirstS = First_Set(Book, TerminalS, NullS)
-
-    c = Calc_Closure({Item(0, 0, ('$',))}, Book, FirstS, TerminalS, NullS)
-
-    productions, parse_tab = LR1_parse_table(
-        Book, FirstS, TerminalS, NullS, start_symbol='Goal')
-
-    for i in range(len(parse_tab) + 1):
-        print(i, " : ", parse_tab[i])
-'''
-    # print(parse_tab)
-    # print(FirstS == First(PP, TerminalS, NullS))
