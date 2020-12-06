@@ -34,7 +34,7 @@ class Scanner:
             res = self.scan()
             if res.type != SPACE:
                 if res.type == 'KEY_WORDS':
-                    res = Token(res.value,res.value,res.index)
+                    res = Token("'%s'" % res.value,res.value,res.index)
                 elif res.type == ERR_ID:
                     yield Token("ERROR","ID_INVALID",res.index)
                 yield res

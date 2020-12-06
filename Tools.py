@@ -270,6 +270,7 @@ def Load_Table():
     #Extended_Table, Action_Table, Goto_Table, = pickle.load(fp)
     Extended_Table, Action_Table, Goto_Table = pickle.load(fp)
     return Extended_Table, Action_Table, Goto_Table
+
 if __name__ == '__main__':
     
     Extended_Table, Action_Table, Goto_Table = Load_Table()
