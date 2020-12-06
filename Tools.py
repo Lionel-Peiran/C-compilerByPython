@@ -272,8 +272,8 @@ def Load_Table():
     return Extended_Table, Action_Table, Goto_Table
 
 def Old_table():
-    fp = open('data/c_parse_table.dat', 'rb') 
-    parse_tab, productions = pickle.load(fp)
+    fp = open('parse_table.dat', 'rb') 
+    productions,parse_tab = pickle.load(fp)
     return parse_tab,productions
 
 if __name__ == '__main__':
