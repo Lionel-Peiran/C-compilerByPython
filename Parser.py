@@ -39,6 +39,7 @@ class Parser(object):
                 self.status.append(gotoTable[curStatus][self.symbol[-1]])
             elif action == SUCCESS:
                 self.STATUS = True
+                print('SUCCESSFUL')
                 break
             else:
                 self.STATUS = False
