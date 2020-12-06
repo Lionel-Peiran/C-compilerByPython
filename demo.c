@@ -1,4 +1,4 @@
-int main()
+int main      ()
 {
     int a = 10;//asdasdasdas
     float b = 20;//dasdasdasdasd
