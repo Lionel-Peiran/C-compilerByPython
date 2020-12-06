@@ -271,6 +271,11 @@ def Load_Table():
     Extended_Table, Action_Table, Goto_Table = pickle.load(fp)
     return Extended_Table, Action_Table, Goto_Table
 
+def Old_table():
+    fp = open('data/c_parse_table.dat', 'rb') 
+    parse_tab, productions = pickle.load(fp)
+    return parse_tab,productions
+
 if __name__ == '__main__':
     
     Extended_Table, Action_Table, Goto_Table = Load_Table()

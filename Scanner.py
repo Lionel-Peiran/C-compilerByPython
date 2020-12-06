@@ -19,7 +19,7 @@ class Scanner:
         self.data,_ = re.subn(RE_REMARK1,'',self.data)
         self.sizeofFile = len(self.data)
         # 准备匹配
-        keyList = keyWords + single_separetor + double_separetor + triple_separetor
+        keyList = keyWords + triple_separetor + double_separetor + single_separetor  
         self.REs.append(Word('KEY_WORDS',re.compile('|'.join(keyList))))
         self.REs.append(Word(IDENTIFIER,re.compile(RE_ID)))
         self.REs.append(Word(INTEGER,re.compile(RE_INT)))
@@ -34,10 +34,11 @@ class Scanner:
             res = self.scan()
             if res.type != SPACE:
                 if res.type == 'KEY_WORDS':
-                    res = Token("'%s'" % res.value,res.value,res.index)
+                    yield Token("'%s'" % res.value,res.value,res.index)
                 elif res.type == ERR_ID:
                     yield Token("ERROR","ID_INVALID",res.index)
-                yield res
+                else:
+                    yield res
         yield Token("$","$",self.index)
         
         
@@ -55,5 +56,4 @@ class Scanner:
         else:
             return Token('ERROR','UNABLE_TO_MATCH',self.index)
         return res
-
 
