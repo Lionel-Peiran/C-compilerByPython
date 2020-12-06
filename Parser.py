@@ -27,7 +27,7 @@ class Parser(object):
             print(curToken.type)
             print(actionTable[self.status[-1]])
             print(self.status[-1])
-            action, target = actionTable[self.status[-1]][curToken.type]
+            action, target = actionTable[self.status[-1]][curToken.type
             print(target)
             input()
 
