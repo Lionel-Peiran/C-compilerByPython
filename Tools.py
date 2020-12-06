@@ -33,8 +33,6 @@ def Terminal_Set(Grammar_Table):
     return TerminalS
 
 def First_Closure(ps, first, terminal, nullable, left=None, follow=None):
-    #if len(ps) == 1 and ps[-1] == 'ε':
-    #    return set()
     res = set()
     for b in ps:
         if b in terminal:
@@ -59,14 +57,11 @@ def First_Set(Grammar_Table, Terminal, NullS):
     return First
 
 def Follow_Set(Grammar_Table, FirstS, Terminal, NullS):
-
     Follow = defaultdict(set)
     changing = True
     while changing:
         changing = False
         for lhs, *rhs in Grammar_Table:
-            #if len(rhs) == 1 and rhs[-1] == 'ε':
-            #    continue
             cur = Follow[lhs]
             for term in rhs[::-1]:
                 if term in Terminal:
@@ -114,157 +109,85 @@ def Calc_Closure(iniClosure, Grammar_Table, FirstS, TerminalS, NullS):
 
     return curClosure
 
-def NullableSet(productions):
-    """
-    计算Nullable集
-    """
-    p = productions
-    nulls = set()
+def closure(items, productions, FIRST, TERMINAL, Nullable):
+    LookUp = defaultdict(list)
+    for id, (lhs, *right) in enumerate(productions):
+        LookUp[lhs].append(id)
+
+    res = set(items)
     changing = True
     while changing:
         changing = False
-        for left, *right in p:
-            if left in nulls:
-                continue
-            if len(right) == 1 and right[-1] == 'ε':
-                nulls.add(left)
-                changing = True
-            elif all(map(lambda i: i in nulls, right)):  # 右部全为nullable
-                nulls.add(left)
-                changing = True
+        for s in res.copy():
+            lhs, *right = productions[s.pid]
+            # 对于每一个形如 A -> a*Bb, c 的项
+            if len(right) > s.dot and right[s.dot] not in TERMINAL: # 项可展开
+                fs = First_Closure(right[s.dot+1:], FIRST, TERMINAL, Nullable)
+                if Nullable_Closure(right[s.dot+1:], Nullable):  # Bc可为空
+                    fs = fs.union(s.ahead)
+                for pid in LookUp[right[s.dot]]:
+                    t = Item(pid, 0, tuple(fs))
+                    if t not in res:
+                        res.add(t)
+                        changing = True
 
-    return nulls
-
-
-def First(productions, terminal, nullable):
-    p = productions
-    first = defaultdict(set)
-    changing = True
-    while changing:
-        changing = False
-        origin = first.copy()
-        for left, *right in p:
-            
-            res = First_S(right, first, terminal, nullable)
-            if res:
-                changing = True
-            first[left] = first[left] | res
-
-        if origin == first:
-            break
-    return first
-
-
-def First_S(ps, first, terminal, nullable, left=None, follow=None):
-    """
-    计算串的First集合， 如果传入了left（左部），则为计算left->ps推导式的select集
-    """
-    if len(ps) == 1 and ps[-1] == 'ε':
-        return set()
-    res = set()
-    for b in ps:
-        if b in terminal:
-            res.add(b)
-            return res
-        else:
-            res = res.union(first[b])
-            if b not in nullable:
-                return res
-    if left and follow:
-        res.add(follow[left])
     return res
 
 
-
-def Follow(productions, fitst, terminal, nullable):
-    """
-    计算Follow集
-    """
-    p = productions
-    follow = defaultdict(set)
-    changing = True
-    while changing:
-        changing = False
-        for left, *right in p:
-            if len(right) == 1 and right[-1] == 'ε':
-                continue
-            temp = follow[left]
-            for b in right[::-1]:
-                if b in terminal:
-                    temp = follow[b]
-                else:
-                    if temp-follow[b]:
-                        follow[b] = temp.union(follow[b])
-                        changing = True
-                    if b in nullable:
-                        temp = temp.union(fitst[b])
-                    else:
-                        temp = fitst[b]
-
-    return follow
-
 def goto(items, X, productions, FIRST, TERMINAL, Nullable):
-
     res = set()
     for item in items:
         p = productions[item.pid]
         if (item.dot+1) < len(p) and p[item.dot+1] == X:
-            c = Calc_Closure({Item(item.pid, item.dot+1, item.ahead)},
-                        productions, FIRST, TERMINAL, Nullable)
+            c = closure({Item(item.pid, item.dot+1, item.ahead)}, productions, FIRST, TERMINAL, Nullable)
             res = res.union(c)
     return res
 
 
-def LR1_parse_table(Grammar_Table, FIRST, TERMINAL, Nullable, start_symbol='<程序>'):
+def LR1_parse_tableOld(productions, FIRST, TERMINAL, Nullable, start_symbol='<程序>'):
 
-    Extended_Table = Grammar_Table.copy()
-    Extended_Table.insert(0, ('S', start_symbol))
-    for i in range(len(Extended_Table)):
-        if Extended_Table[i][-1] == 'ε' and len(Extended_Table[i]) == 2:
-            Extended_Table[i] = (Extended_Table[i][0],)
+    productions = productions[:]
+    productions.insert(0, ('S', start_symbol))  # 增广文法
+    for i in range(len(productions)):
+        if productions[i][-1] == 'ε' and len(productions[i]) == 2:
+            productions[i] = (productions[i][0],)
     TERMINAL = TERMINAL.copy()
     TERMINAL.add('$')
 
+
     Action_Table = defaultdict(dict)
     Goto_Table = defaultdict(dict)
-
-    c = Calc_Closure({Item(0, 0, ('$',))}, Extended_Table, FIRST, TERMINAL, Nullable)
     
-    states = [c]
-    StateQueue = [0]
-    
-    while StateQueue:
-        curState = StateQueue.pop()
-
-        #print(len(StateQueue))
-            
-        for item in states[curState]:
-            lhs, *rhs = Extended_Table[item.pid]
-
-            #   It's time to Reduce & Accept !
-            if len(rhs) == item.dot:
+    #Action_Table = defaultdict(dict)
+    c = closure({Item(0, 0, ('$',))}, productions, FIRST, TERMINAL, Nullable)
+    states = [c]  # closure
+    unresolve = [0]  # closure id that need resolve
+    while unresolve:
+        cid = unresolve.pop()
+        print(len(unresolve))
+        for item in states[cid]:
+            left, *right = productions[item.pid]
+            if len(right) == item.dot:  # 规约项
                 for ahead in item.ahead:
+                    Action_Table[cid][ahead] = (ActionState.Reduce, item.pid)  # 设置action为”规约“
                     if item.pid == 0:
-                        Action_Table[curState][ahead] = (ActionState.Accept, item.pid)
-                    else:
-                        Action_Table[curState][ahead] = (ActionState.Reduce, item.pid)
-
-            elif rhs[item.dot] not in Action_Table[curState]:
-                c = goto(states[curState], rhs[item.dot],
-                         Extended_Table, FIRST, TERMINAL, Nullable)
+                        Action_Table[cid][ahead] = (ActionState.Accept, item.pid)  # 设置action为”接受“
+            elif right[item.dot] not in Action_Table[cid] and (right[item.dot] not in Goto_Table[cid]):  # 未处理的移进项目和待归约项目
+                c = goto(states[cid], right[item.dot],
+                         productions, FIRST, TERMINAL, Nullable)
                 try:
-                    nextState = states.index(c)
+                    index = states.index(c)
                 except ValueError:
                     states.append(c)
-                    nextState = len(states)-1
-                    StateQueue.append(nextState)
-                
-                if rhs[item.dot] in TERMINAL:
-                    Action_Table[curState][rhs[item.dot]] = (ActionState.Shift, nextState) 
+                    index = len(states)-1
+                    unresolve.append(index)
+                if right[item.dot] in TERMINAL:
+                    Action_Table[cid][right[item.dot]] = (ActionState.Shift, index)  # 设置action为”移进“
                 else:
-                    Goto_Table[curState][rhs[item.dot]] = nextState
+                    Goto_Table[cid][right[item.dot]] =  index
+    return productions, Action_Table, Goto_Table
 
-    return Extended_Table, Action_Table, Goto_Table
+
 def Load_Table():
     fp = open('parse_table.dat', 'rb') 
     #Extended_Table, Action_Table, Goto_Table, = pickle.load(fp)
@@ -278,39 +201,11 @@ def Old_table():
 
 if __name__ == '__main__':
     
-    Extended_Table, Action_Table, Goto_Table = Load_Table()
-    for i in range(len(Action_Table)):
-        print(i, " : ", Action_Table[i])
-    
-    print(Goto_Table)
-
-    '''
-    S = Book
-    
+    S = PP
     TERMINAL = Terminal_Set(S)
-    #print(TERMINAL)
-    Nullable = NullableSet(S)
-    #print(Nullable)
-    FIRST = First(S, TERMINAL, Nullable)
-    #print(FIRST)
-    #print(First_Set(S, TERMINAL, Nullable))
-    FOLLOW = Follow(S,FIRST, TERMINAL, Nullable)
-    #print(FOLLOW)
+    Nullable = Nullable_Set(S)
+    FIRST = First_Set(S, TERMINAL, Nullable)
+    FOLLOW =  Follow_Set(S,FIRST, TERMINAL, Nullable)
 
-    print("Begin Table Trans")
-    Extended_Table, Action_Table, Goto_Table = LR1_parse_table(S, FIRST, TERMINAL, Nullable, start_symbol='Goal')
-
-    pickle.dump((Extended_Table, dict(Action_Table),  dict(Goto_Table)), open('parse_table.dat', 'wb'))
-
-    for i in range(len(Action_Table)):
-        print(i, " : ", Action_Table[i])
-    
-    print(Goto_Table)
-    #for i in range(len(Goto_Table)):
-    #    print(i, " : ", Goto_Table[i])
-
-    Extended_Table, Action_Table, Goto_Table = Load_Table()
-    print(Action_Table)
-    print(Goto_Table)
-
-    '''
+    Extended_Table, Action_Table, Goto_Table = LR1_parse_tableOld(S, FIRST, TERMINAL, Nullable, start_symbol='translation_unit')
+    pickle.dump((Extended_Table, dict(Action_Table), dict(Goto_Table)), open('parse_table.dat', 'wb'))
