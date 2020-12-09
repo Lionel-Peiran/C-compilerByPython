@@ -29,9 +29,16 @@ class Parser(object):
         self.status.append(INITIAL_STATUS)
         while True:
             curToken = self.Tokens[cur_Token_index]
+            if curToken.type == "ERROR":
+                print("FATAL ERROR")
+                print(curToken)
+                break
             print(curToken)
             print(self.status)
-            action, target = actionTable[self.status[-1]][curToken.type]
+            try:action, target = actionTable[self.status[-1]][curToken.type]
+            except:
+                print(print("FATAL ERROR"))
+                break
             print(actionTable[self.status[-1]][curToken.type])
             
             # input()
@@ -59,6 +66,7 @@ class Parser(object):
             else:
                 self.STATUS = False
                 break
+        return self.STATUS
     def showParserTree(self):
         '''
         暂时使用的语法分析树可视化方法

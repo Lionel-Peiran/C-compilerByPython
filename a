@@ -1,105 +1,61 @@
 Token(type="'int'", value='int', index=3)
 [0]
 (<ActionState.Shift: 2>, 18)
-Token(type='id', value='a', index=5)
+Token(type='id', value='main', index=8)
 [0, 18]
 (<ActionState.Reduce: 1>, 27)
-Token(type='id', value='a', index=5)
+Token(type='id', value='main', index=8)
 [0, 1]
 (<ActionState.Reduce: 1>, 16)
-Token(type='id', value='a', index=5)
+Token(type='id', value='main', index=8)
 [0, 13]
 (<ActionState.Shift: 2>, 1165)
-Token(type="'='", value='=', index=7)
+Token(type="'('", value='(', index=9)
 [0, 13, 1165]
 (<ActionState.Reduce: 1>, 68)
-Token(type="'='", value='=', index=7)
+Token(type="'('", value='(', index=9)
+[0, 13, 1164]
+(<ActionState.Shift: 2>, 1876)
+Token(type="')'", value=')', index=10)
+[0, 13, 1164, 1876]
+(<ActionState.Shift: 2>, 1882)
+Token(type="'{'", value='{', index=12)
+[0, 13, 1164, 1876, 1882]
+(<ActionState.Reduce: 1>, 74)
+Token(type="'{'", value='{', index=12)
 [0, 13, 1164]
 (<ActionState.Reduce: 1>, 67)
-Token(type="'='", value='=', index=7)
+Token(type="'{'", value='{', index=12)
 [0, 13, 1169]
-(<ActionState.Shift: 2>, 1180)
-Token(type='int_const', value='2', index=9)
-[0, 13, 1169, 1180]
-(<ActionState.Shift: 2>, 1182)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 1182]
-(<ActionState.Reduce: 1>, 219)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 1195]
-(<ActionState.Reduce: 1>, 214)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 1189]
-(<ActionState.Reduce: 1>, 205)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 1185]
-(<ActionState.Reduce: 1>, 193)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 1183]
-(<ActionState.Reduce: 1>, 191)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 833]
-(<ActionState.Reduce: 1>, 187)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 822]
-(<ActionState.Reduce: 1>, 184)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 827]
-(<ActionState.Reduce: 1>, 181)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 815]
-(<ActionState.Reduce: 1>, 176)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 836]
-(<ActionState.Reduce: 1>, 173)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 835]
-(<ActionState.Reduce: 1>, 171)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 837]
-(<ActionState.Reduce: 1>, 169)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 840]
-(<ActionState.Reduce: 1>, 167)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 839]
-(<ActionState.Reduce: 1>, 165)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 838]
-(<ActionState.Reduce: 1>, 163)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 823]
-(<ActionState.Reduce: 1>, 160)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 1199]
-(<ActionState.Reduce: 1>, 147)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 1196]
-(<ActionState.Reduce: 1>, 90)
-Token(type="';'", value=';', index=10)
-[0, 13, 1169, 1180, 1198]
-(<ActionState.Reduce: 1>, 48)
-Token(type="';'", value=';', index=10)
-[0, 13, 1171]
+(<ActionState.Shift: 2>, 1383)
+Token(type="'int'", value='int', index=20)
+[0, 13, 1169, 1383]
+(<ActionState.Shift: 2>, 18)
+Token(type='id', value='a', index=22)
+[0, 13, 1169, 1383, 18]
+(<ActionState.Reduce: 1>, 27)
+Token(type='id', value='a', index=22)
+[0, 13, 1169, 1383, 1]
+(<ActionState.Reduce: 1>, 16)
+Token(type='id', value='a', index=22)
+[0, 13, 1169, 1383, 1398]
+(<ActionState.Shift: 2>, 1176)
+Token(type="';'", value=';', index=23)
+[0, 13, 1169, 1383, 1398, 1176]
+(<ActionState.Reduce: 1>, 68)
+Token(type="';'", value=';', index=23)
+[0, 13, 1169, 1383, 1398, 1175]
+(<ActionState.Reduce: 1>, 67)
+Token(type="';'", value=';', index=23)
+[0, 13, 1169, 1383, 1398, 1179]
+(<ActionState.Reduce: 1>, 47)
+Token(type="';'", value=';', index=23)
+[0, 13, 1169, 1383, 1398, 1171]
 (<ActionState.Reduce: 1>, 45)
-Token(type="';'", value=';', index=10)
-[0, 13, 1170]
-(<ActionState.Shift: 2>, 1173)
-Token(type='$', value='$', index=10)
-[0, 13, 1170, 1173]
-(<ActionState.Reduce: 1>, 9)
-Token(type='$', value='$', index=10)
-[0, 32]
-(<ActionState.Reduce: 1>, 4)
-Token(type='$', value='$', index=10)
-[0, 19]
-(<ActionState.Reduce: 1>, 1)
-Token(type='$', value='$', index=10)
-[0, 34]
-(<ActionState.Accept: 3>, 0)
-SUCCESSFUL
-translation_unit¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªexternal_decl¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªdecl¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª©Ðdecl_specs¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªtype_spec¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª'int' ¡ª int
-                                                                                ©Àinit_declarator_list¡ª¡ª¡ª¡ª¡ª¡ª¡ªinit_declarator¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª©Ðdeclarator¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªdirect_declarator¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªid ¡ª a
-                                                                                ©¦                                                     ©À¡ª'=' ¡ª =
-                                                                                ©¦                                                     ©¸initializer¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªassignment_exp¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªconditional_exp¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªlogical_or_exp¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªlogical_and_exp¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªinclusive_or_exp¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªexclusive_or_exp¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªand_exp¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªequality_exp¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªrelational_exp¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªshift_expression¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªadditive_exp¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªmult_exp¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªcast_exp¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªunary_exp¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªpostfix_exp¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªprimary_exp¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªconst¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªint_const ¡ª 2
-                                                                                ©¸¡ª';' ¡ª ;
+Token(type="';'", value=';', index=23)
+[0, 13, 1169, 1383, 1398, 1838]
+(<ActionState.Shift: 2>, 1840)
+Token(type='$', value='$', index=23)
+[0, 13, 1169, 1383, 1398, 1838, 1840]
+FATAL ERROR
+None
