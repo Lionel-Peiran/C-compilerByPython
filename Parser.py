@@ -2,19 +2,15 @@ from collections import namedtuple
 from Scanner import Scanner,Token
 from Grammar import PP
 from Utils import ActionState
-from Tools import Load_Table,Old_table
+from Tools import Load_Table
 INITIAL_STATUS = 0
-LENGTH_OF_WORD = 18
+LENGTH_OF_WORD = 26
 
 SHIFT = ActionState.Shift
 REDUCE = ActionState.Reduce
 SUCCESS = ActionState.Accept
-'''
-SHIFT = 0
-REDUCE = 1
-SUCCESS = 2
-'''
-Node = namedtuple('Node','type Children')
+
+Node = namedtuple('Node','type Children') #tuple，用于生成语法分析书
 
 class Parser(object):
     """
@@ -64,6 +60,9 @@ class Parser(object):
                 self.STATUS = False
                 break
     def showParserTree(self):
+        '''
+        暂时使用的语法分析树可视化方法
+        '''
         def showLeafNode(leafNode):
             try:
                 type,value,index = leafNode
@@ -72,17 +71,34 @@ class Parser(object):
                 print(leafNode) 
                 return
         def showLevelNode(levelNode,leftSpace):
-            for i in range(len(levelNode)):
-                pass
+            n = len(levelNode)
+            for i in range(n):
+                space = ' ' * (LENGTH_OF_WORD)
+                if n == 1:
+                    print('—',end='')
+                    space += ' '
+                elif i == 0:
+                    print('┬', end='')
+                    space = '│'+(LENGTH_OF_WORD)*' '
+                elif i == n-1:
+                    print(leftSpace+'└', end='')
+                else:
+                    space = '│'+(LENGTH_OF_WORD)*' '
+                    print(leftSpace+'├', end='')
+                
+                if isinstance(levelNode[i],Node):
+                    print('%s%s' % (levelNode[i].type,'—'*((LENGTH_OF_WORD) - len(levelNode[i].type.encode('gbk')))),end='')
+                    showLevelNode(levelNode[i].Children,leftSpace + space)
+                else:
+                    print('—',end='')
+                    showLeafNode(levelNode[i])
+        
         for i in self.symbol:
             if isinstance(i,Node):
-                print('%s%s' % n.NT,'—'*((LENGTH_OF_WORD - 2) - len(i.type)),end='')
-                showLevelNode(i.Children,' '*(LENGTH_OF_WORD - 1))
+                print('%s%s' % (i.type,'—'*((LENGTH_OF_WORD) - len(i.type.encode('gbk')))),end='')
+                showLevelNode(i.Children,' '*(LENGTH_OF_WORD))
             else:
                 showLeafNode(i)
     
 
-Extended_Table, Action_Table, Goto_Table = Load_Table()
-# Action_Table, Extended_Table = Old_table()
-P = Parser('demo.c')
-P.parser(Extended_Table,Action_Table,Goto_Table)
+

@@ -1,3 +1,7 @@
+'''
+此文件保存关键词，正则表达式等，用于词法分析器的匹配
+'''
+
 keyWords = ['union', 'char', 'static', 'struct', 'extern', 'signed', 'goto', 'do', 'default',
             'short', 'double', 'enum', 'unsigned', 'const', 'float',
             'auto', 'continue', 'void', 'sizeof', 'else', 'volatile', 'register', 'int',

@@ -7,6 +7,9 @@ from KeyWords import *
 Token = namedtuple('Token','type value index')
 Word = namedtuple('Word','type RE')
 class Scanner:
+    '''
+    类构造函数，输入需要被分析文件的路径
+    '''
     def __init__(self,filePath):
         self.data = ''
         self.REs = []
@@ -28,7 +31,10 @@ class Scanner:
         self.REs.append(Word(CHAR,re.compile(RE_CHAR)))
         self.REs.append(Word(SPACE,re.compile(RE_SPACE)))
         self.REs.append(Word(ERR_ID,re.compile(RE_ERR_ID)))    
-    
+    '''
+    调用此方法可生成一个迭代器，用于返回下个词的Token
+    此方法调用scan函数，处理其返回的Token并返回
+    '''
     def next(self):
         while self.index < self.sizeofFile:
             res = self.scan()
@@ -41,7 +47,9 @@ class Scanner:
                     yield res
         yield Token("$","$",self.index)
         
-        
+    '''
+    私有函数，使用正则表达式进行匹配，返回当前匹配到的一个词的Token
+    '''  
     def scan(self):
         maxIndex = self.index
         res = Token('','','')
@@ -56,4 +64,3 @@ class Scanner:
         else:
             return Token('ERROR','UNABLE_TO_MATCH',self.index)
         return res
-
